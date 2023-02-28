@@ -2,6 +2,8 @@ body {
   margin: 0;
 }
 
+/*--Global styling--*/
+
 .navbar {
   position: absolute;
   bottom: 0;
@@ -12,3 +14,46 @@ body {
   grid-template-columns: 1fr 1fr 1fr;
   place-items: center;
 }
+
+/*--Global styling--*/
+
+/*--Routines page--*/
+.routine-wrapper {
+  background-color: aquamarine;
+  height: 87.5vh;
+  position: relative;
+}
+
+.routine-edit-button {
+  border-radius: 50%;
+  border: transparent;
+  color: black;
+  background-color: #bf3a30;
+  background-image: linear-gradient(315deg, #bf3a30 0%, #864ba2 74%);
+  height: 75px;
+  width: 75px;
+  position: absolute;
+  bottom: 8.5%;
+  right: 8.5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s;
+}
+
+.toggled {
+  color: white;
+  border-radius: 10px;
+}
+
+.create-routine-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.create-routine-form div {
+  display: flex;
+  flex-direction: column;
+}
+
+/*--Routines page--*/

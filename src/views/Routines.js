@@ -1,6 +1,28 @@
+import Localbase from 'localbase'
+import { useState } from 'react'
+import Routine from '../components/Routine'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPenToSquare } from '@fortawesome/free-regular-svg-icons'
+import CreateForm from '../components/CreateForm'
+
 function Routines () {
+    let db = new Localbase('db')
+    const [editMode, setEditMode] = useState(false)
+    const [routineList, setRoutineList] = useState([])
+    const [formVisible, setFormVisible] = useState(false)
+
     return (
-        <div>Routines</div>
+        <div className='routine-wrapper'>
+            {formVisible ? <CreateForm /> : <>
+            {routineList.length === 0 ? <div>You haven't created any routines yet! Click on the Edit button to add some.</div> : null}
+            {routineList.map((routine, index) => 
+                <Routine/>
+            )}
+            {editMode ? <button onClick={() => {setFormVisible(true)}}>Create</button> : null}
+            
+            <button className={!editMode ? 'routine-edit-button' : 'routine-edit-button toggled'} onClick={() => {setEditMode(!editMode)}}><FontAwesomeIcon icon={faPenToSquare} size='3x' /></button>
+            </>}
+        </div>
     )
 }
 
