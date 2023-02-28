@@ -1,14 +1,11 @@
-import Localbase from 'localbase'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Routine from '../components/Routine'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare } from '@fortawesome/free-regular-svg-icons'
 import CreateForm from '../components/CreateForm'
 
-function Routines () {
-    let db = new Localbase('db')
+function Routines ({ routineList }) {
     const [editMode, setEditMode] = useState(false)
-    const [routineList, setRoutineList] = useState([])
     const [formVisible, setFormVisible] = useState(false)
 
     return (
@@ -16,7 +13,7 @@ function Routines () {
             {formVisible ? <CreateForm /> : <>
             {routineList.length === 0 ? <div>You haven't created any routines yet! Click on the Edit button to add some.</div> : null}
             {routineList.map((routine, index) => 
-                <Routine/>
+                <Routine key={index} routine={routine} editMode={editMode}/>
             )}
             {editMode ? <button onClick={() => {setFormVisible(true)}}>Create</button> : null}
             

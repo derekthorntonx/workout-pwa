@@ -56,4 +56,10 @@ body {
   flex-direction: column;
 }
 
+.individual-routine {
+  width: 100%;
+  background-color: white;
+  border-bottom: 1px solid red;
+  height: 8%
+}
 /*--Routines page--*/
