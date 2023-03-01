@@ -1,16 +1,17 @@
 import Localbase from "localbase"
 
-function Routine ({ routine, editMode }) {
+function Routine ({ routine, setRefreshKey }) {
     let db = new Localbase('db')
 
     function handleDelete() {
-        db.collection('routines').doc(`${routine.key}`).delete()
+        db.collection('routines').doc(`${routine.key}`).delete().then( () => {
+        setRefreshKey(oldKey => !oldKey)})
     }
 
     return (
         <div className="individual-routine">
             {routine.data.name}
-            {editMode ? <button onClick={handleDelete}>Delete</button> : null}
+            <button onClick={handleDelete}>Delete</button>
         </div>
     )
 }

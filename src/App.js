@@ -9,12 +9,13 @@ import Tracking from './views/Tracking'
 
 function App() {
   const [routineList, setRoutineList] = useState([])
+  const [refreshKey, setRefreshKey] = useState(0)
   
   let db = new Localbase('db')
 
   useEffect(() => {
     db.collection('routines').get({keys: true}).then(routines => setRoutineList(routines))
-    }, [])
+    }, [refreshKey])
 
   return (
     <div className="App">
@@ -22,7 +23,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home/>} />
         <Route path='/tracking' element={<Tracking/>} />
-        <Route path='/routines' element={<Routines routineList={routineList} />} />
+        <Route path='/routines' element={<Routines routineList={routineList} setRefreshKey={setRefreshKey} />} />
       </Routes>
       <NavBar/>
     </BrowserRouter>

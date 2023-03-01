@@ -1,7 +1,8 @@
 import { useRef } from 'react'
 import Localbase from 'localbase'
+import { TextField, Button } from '@mui/material'
 
-function CreateForm() {
+function CreateForm({ setRefreshKey, setFormVisible }) {
     const nameRef = useRef()
     const t1Ref = useRef()
     const t2Ref1 = useRef()
@@ -27,37 +28,37 @@ function CreateForm() {
             t1: t1Ref.current.value,
             t2s: [...t2Inputs],
             t3s: [...t3Inputs]
-        })
+        }).then( () => {
+            setRefreshKey(oldKey => !oldKey)
+            setFormVisible(false)})
     }
 
     return (
         <form className='create-routine-form'>
-            <div>
-                <label>Name: </label>
-                <input type='text' required ref={nameRef}/>
+
+            <TextField placeholder='Routine name' variant="standard" required inputRef={nameRef}/>
+            
+            <div className='create-routine-label'>
+                <label>Main movement:</label>
+                <TextField variant="standard" required inputRef={t1Ref}/>
             </div>
 
-            <div>
-                <label>Choose a main movement:</label>
-                <input type='text' required ref={t1Ref}/>
+            <div className='create-routine-label'>
+                <label>Assistance movements:</label>
+                <TextField size='small' variant="standard" required inputRef={t2Ref1}/>
+                <TextField variant="standard" required inputRef={t2Ref2}/>
+                <TextField variant="standard" placeholder='Optional' inputRef={t2Ref3}/>
             </div>
 
-            <div>
-                <label>Choose 2-3 assistance movements:</label>
-                <input type='text' required ref={t2Ref1}/>
-                <input type='text' required ref={t2Ref2}/>
-                <input type='text' placeholder='Optional...' ref={t2Ref3}/>
+            <div className='create-routine-label'>
+                <label>Accessory movements:</label>
+                <TextField variant="standard" required inputRef={t3Ref1}/>
+                <TextField variant="standard" required inputRef={t3Ref2}/>
+                <TextField variant="standard" placeholder='Optional' inputRef={t3Ref3}/>
+                <TextField variant="standard" placeholder='Optional' inputRef={t3Ref4}/>
             </div>
 
-            <div>
-                <label>Choose 2-4 accessory movements:</label>
-                <input type='text' required ref={t3Ref1}/>
-                <input type='text' required ref={t3Ref2}/>
-                <input type='text' placeholder='Optional...' ref={t3Ref3}/>
-                <input type='text' placeholder='Optional...' ref={t3Ref4}/>
-            </div>
-
-            <button onClick={handleCreateRoutine}>Create</button>
+            <Button variant='contained' onClick={handleCreateRoutine}>Create</Button>
         </form>
     )
 }
