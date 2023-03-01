@@ -39,8 +39,7 @@ body {
 .individual-routine {
   width: 100%;
   background-color: white;
-  border-bottom: 1px solid red;
-  height: 8%
+  font-size: 1.5rem;
 }
 
 .blank-routines-page {
