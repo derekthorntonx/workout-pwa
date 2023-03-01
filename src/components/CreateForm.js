@@ -14,7 +14,7 @@ function CreateForm({ setRefreshKey, setFormVisible }) {
     const t3Ref4 = useRef()
     let db = new Localbase('db')
 
-    function handleCreateRoutine() {
+    const handleCreateRoutine = () => {
         if (nameRef.current.value === '' || t1Ref.current.value === '' || t2Ref1.current.value === '' || t2Ref2.current.value === '' || t3Ref1.current.value === '' || t3Ref2.current.value === ''){ return }
         let t2Inputs = [t2Ref1.current.value, t2Ref2.current.value]
         if (t2Ref3.current.value !== ''){t2Inputs.push(t2Ref3.current.value)}
@@ -59,6 +59,7 @@ function CreateForm({ setRefreshKey, setFormVisible }) {
             </div>
 
             <Button variant='contained' onClick={handleCreateRoutine}>Create</Button>
+
         </form>
     )
 }
