@@ -1,5 +1,13 @@
+import { History, CheckCircle } from '@mui/icons-material'
+import ExerciseTable from './ExerciseTable'
+
 function CurrentRoutine({ currentRoutine }) {
     let t1Range, t2Range, t3Range
+    const assistanceExercises = [...currentRoutine.data.t2s]
+
+    //TODO: Get previous workout of same name, use previous lift numbers to set placeholder values
+
+    // Change rep ranges depending on week cycle number
     switch (currentRoutine.data.cycle){
         case 1:
             t1Range = 10
@@ -23,13 +31,25 @@ function CurrentRoutine({ currentRoutine }) {
             break
     }
 
-    return (
-        <div>
-            <div>{currentRoutine.data.name}</div>
+    const handleHistory = () => {
+        console.log('clicked history button')
+    }
 
-            <div>
-                {currentRoutine.data.t1}
-                {`3 x ${t1Range}`}
+    const handleSubmit = () => {
+        console.log('clicked submit button')
+    }
+
+    return (
+        <form className="current-routine-form">
+            <div style={{display: 'flex', justifyContent: 'space-between', width: '100%', paddingBottom: '2.5%'}}>
+                <History fontSize='large' sx={{padding: '5%'}} onClick={handleHistory} />
+                <CheckCircle fontSize='large' sx={{padding: '5%'}} onClick={handleSubmit} />
+            </div>
+
+            <div className='current-routine-label'>{currentRoutine.data.name}</div>
+
+            <div style={{width: '100%'}}>
+                {assistanceExercises.map(exercise => <ExerciseTable key={exercise} exercise={exercise} />)}
             </div>
 
             <div>
@@ -42,7 +62,7 @@ function CurrentRoutine({ currentRoutine }) {
                 {`3 x ${t3Range}`}
             </div>
 
-        </div>
+        </form>
     )
 }
 

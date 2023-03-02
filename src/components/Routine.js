@@ -2,11 +2,13 @@ import Localbase from "localbase"
 import { Menu, MenuItem, Button, Paper } from '@mui/material'
 import { useState } from 'react'
 import { Settings, PlayArrow } from '@mui/icons-material'
+import { useNavigate } from 'react-router-dom'
 
 function Routine ({ routine, setRefreshKey, setEditFormVisible, setEditTarget, setCurrentRoutine }) {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl)
     let db = new Localbase('db')
+    const navigate = useNavigate();
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget)
@@ -31,7 +33,7 @@ function Routine ({ routine, setRefreshKey, setEditFormVisible, setEditTarget, s
 
     const handleStart = () => {
         setCurrentRoutine(routine)
-        console.log('clicked', routine)
+        navigate('/')
     }
 
     return (

@@ -52,3 +52,38 @@ body {
   font-size: 1.5rem;
 }
 /*--Routines page--*/
+
+/*--Home page--*/
+.current-routine-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: lightblue;
+}
+
+.current-routine-label {
+  font-size: 2rem;
+}
+
+.exercise-grid {
+  display: grid;
+  grid-template-columns: 1fr 3fr 2fr 2fr;
+  padding: 1% 5%;
+  place-items: center;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  display: none;
+}
+
+.exercise-name {
+  font-size: 1.5rem;
+}
+
+.exercise-grid input[type='number']{
+  width: 1.5rem;
+  text-align: center;
+}
+
+/*--Home page--*/
