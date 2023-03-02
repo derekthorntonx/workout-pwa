@@ -1,9 +1,9 @@
 import Localbase from "localbase"
 import { Menu, MenuItem, Button, Paper } from '@mui/material'
 import { useState } from 'react'
-import { Settings } from '@mui/icons-material'
+import { Settings, PlayArrow } from '@mui/icons-material'
 
-function Routine ({ routine, setRefreshKey, setEditFormVisible, setEditTarget }) {
+function Routine ({ routine, setRefreshKey, setEditFormVisible, setEditTarget, setCurrentRoutine }) {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl)
     let db = new Localbase('db')
@@ -29,9 +29,15 @@ function Routine ({ routine, setRefreshKey, setEditFormVisible, setEditTarget })
         setAnchorEl(null)
     }
 
+    const handleStart = () => {
+        setCurrentRoutine(routine)
+        console.log('clicked', routine)
+    }
+
     return (
         <div className="individual-routine">
             <Paper elevation={3} sx={{height: '7.5vh', marginBottom: '1%', background: 'pink', display: 'flex', alignItems: 'center', padding: '2%'}}>
+                <PlayArrow onClick={handleStart}/>
                 {routine.data.name}
                 <Button
                     id="basic-button"

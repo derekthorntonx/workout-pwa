@@ -5,7 +5,7 @@ import EditForm from '../components/EditForm'
 import { Fab } from '@mui/material'
 import { Add, Announcement } from '@mui/icons-material'
 
-function Routines ({ routineList, setRefreshKey }) {
+function Routines ({ routineList, setRefreshKey, setCurrentRoutine }) {
     const [formVisible, setFormVisible] = useState(false)
     const [editFormVisible, setEditFormVisible] = useState(false)
     const [editTarget, setEditTarget] = useState(null)
@@ -28,7 +28,7 @@ function Routines ({ routineList, setRefreshKey }) {
                     </div>
                 </div> : null}
             {routineList.map((routine, index) => 
-                <Routine key={index} routine={routine} setRefreshKey={setRefreshKey} setEditFormVisible={setEditFormVisible} setEditTarget={setEditTarget}/>
+                <Routine key={index} routine={routine} setRefreshKey={setRefreshKey} setEditFormVisible={setEditFormVisible} setEditTarget={setEditTarget} setCurrentRoutine={setCurrentRoutine}/>
             )}
             <Fab onClick={handleCreate} className='create-routine-button' sx={{background: 'peachpuff', position: 'absolute', right: '10%', bottom: '15%'}}> <Add/> </Fab>
             </>
