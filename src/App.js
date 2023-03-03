@@ -6,12 +6,14 @@ import Home from './views/Home'
 import Routines from './views/Routines'
 import NavBar from './components/Navbar'
 import Tracking from './views/Tracking'
+import { CurrentWorkout } from './context/CurrentWorkout'
 
 function App() {
   const [routineList, setRoutineList] = useState([])
   const [refreshKey, setRefreshKey] = useState(0)
-  const [prevWorkout, setPrevWorkout] = useState('')
+  const [prevWorkout, setPrevWorkout] = useState({})
   const [currentRoutine, setCurrentRoutine] = useState({})
+  const [draft, setDraft] = useState([])
 
   let db = new Localbase('db')
 
@@ -26,16 +28,18 @@ function App() {
   }, [])
 
   return (
+    <CurrentWorkout.Provider value={draft}>
     <div className="App">
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Home prevWorkout={prevWorkout} currentRoutine={currentRoutine}/>} />
+        <Route path='/' element={<Home prevWorkout={prevWorkout} currentRoutine={currentRoutine} setDraft={setDraft}/>} />
         <Route path='/tracking' element={<Tracking/>} />
-        <Route path='/routines' element={<Routines routineList={routineList} setRefreshKey={setRefreshKey} setCurrentRoutine={setCurrentRoutine} />} />
+        <Route path='/routines' element={<Routines routineList={routineList} setRefreshKey={setRefreshKey} setCurrentRoutine={setCurrentRoutine} setDraft={setDraft} />} />
       </Routes>
       <NavBar/>
     </BrowserRouter>
     </div>
+    </CurrentWorkout.Provider>
   );
 }
 

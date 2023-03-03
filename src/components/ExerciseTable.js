@@ -1,11 +1,24 @@
-import { AddCircle } from '@mui/icons-material'
+import { AddCircle, Clear } from '@mui/icons-material'
+import { useState } from 'react'
+import IndividualSet from './IndividualSet'
 
-function ExerciseTable({ exercise }) {
 
-    let setCount = 3
+function ExerciseTable({ exercise, repRange, setDraft }) {
+    
+    const [sets, setSets] = useState(3)
+    const setRows = []
+
+    for (let i = 1; i < sets + 1; i++){
+        setRows.push(<IndividualSet key={i} setNumber={i} repRange={repRange} exercise={exercise} setDraft={setDraft} />)
+    }
 
     const handleAddSet = () => {
-        console.log('clicked button')
+        if (sets >= 5) return
+        setSets(previous => previous + 1)
+    }
+
+    const handleDeleteSet = () => {
+        setSets(previous => previous - 1)
     }
 
     return (
@@ -18,42 +31,9 @@ function ExerciseTable({ exercise }) {
                 <div>Reps</div>
             </div>
 
-            <div className="exercise-grid">
-                <div>1</div>
-                <div>185x10</div>
-                <input type='number'></input>
-                <input type='number' placeholder='10'></input>
-            </div>
+            <div>{setRows}</div>
 
-            <div className="exercise-grid">
-                <div>2</div>
-                <div>185x10</div>
-                <input type='number'></input>
-                <input type='number' placeholder='10'></input>
-            </div>
-
-            <div className="exercise-grid">
-                <div>3</div>
-                <div>185x10</div>
-                <input type='number'></input>
-                <input type='number' placeholder='10'></input>
-            </div>
-
-            <div className="exercise-grid">
-                <div>4</div>
-                <div>185x10</div>
-                <input type='number'></input>
-                <input type='number' placeholder='10'></input>
-            </div>
-
-            <div className="exercise-grid">
-                <div>5</div>
-                <div>185x10</div>
-                <input type='number'></input>
-                <input type='number' placeholder='10'></input>
-            </div>
-
-            <div style={{display: 'flex', alignItem: 'center', justifyContent: 'center'}}><AddCircle onClick={handleAddSet} /></div>
+            <div style={{display: 'flex', alignItem: 'center', justifyContent: 'center', marginTop: '1%'}}><AddCircle onClick={handleAddSet}/></div>
 
         </div>
     )

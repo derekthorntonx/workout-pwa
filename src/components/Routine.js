@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Settings, PlayArrow } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
 
-function Routine ({ routine, setRefreshKey, setEditFormVisible, setEditTarget, setCurrentRoutine }) {
+function Routine ({ routine, setRefreshKey, setEditFormVisible, setEditTarget, setCurrentRoutine, setDraft }) {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl)
     let db = new Localbase('db')
@@ -34,6 +34,28 @@ function Routine ({ routine, setRefreshKey, setEditFormVisible, setEditTarget, s
     const handleStart = () => {
         setCurrentRoutine(routine)
         navigate('/')
+        //db.collection('draft').delete()
+        let t2s = []
+        let t3s = []
+        routine.data.t2s.forEach(exercise => t2s.push({[`${exercise}`]: []}))
+        routine.data.t3s.forEach(exercise => t3s.push({[`${exercise}`]: []}))
+        setDraft({
+                type: routine.data.name,
+                date: Date.now(),
+                main: [],
+                t2s,
+                t3s,
+                id: 1
+            })
+            
+        //db.collection('draft').add({
+        //    type: routine.data.name,
+        //    date: Date.now(),
+        //    main: [],
+        //    t2s,
+        //    t3s,
+        //    id: 1
+        //})
     }
 
     return (

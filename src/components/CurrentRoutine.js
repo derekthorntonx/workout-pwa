@@ -1,9 +1,11 @@
 import { History, CheckCircle } from '@mui/icons-material'
 import ExerciseTable from './ExerciseTable'
+import { useState } from 'react'
 
-function CurrentRoutine({ currentRoutine }) {
+function CurrentRoutine({ currentRoutine, setDraft }) {
     let t1Range, t2Range, t3Range
     const assistanceExercises = [...currentRoutine.data.t2s]
+    const accessoryExercises = [...currentRoutine.data.t3s]
 
     //TODO: Get previous workout of same name, use previous lift numbers to set placeholder values
 
@@ -49,17 +51,15 @@ function CurrentRoutine({ currentRoutine }) {
             <div className='current-routine-label'>{currentRoutine.data.name}</div>
 
             <div style={{width: '100%'}}>
-                {assistanceExercises.map(exercise => <ExerciseTable key={exercise} exercise={exercise} />)}
+                <ExerciseTable exercise={currentRoutine.data.t1} repRange={t1Range} setDraft={setDraft}/>
             </div>
 
-            <div>
-                {currentRoutine.data.t2s}
-                {`3 x ${t2Range}`}
+            <div style={{width: '100%'}}>
+                {assistanceExercises.map(exercise => <ExerciseTable key={exercise} exercise={exercise} repRange={t2Range} setDraft={setDraft} />)}
             </div>
 
-            <div>
-                {currentRoutine.data.t3s}
-                {`3 x ${t3Range}`}
+            <div style={{width: '100%'}}>
+                {accessoryExercises.map(exercise => <ExerciseTable key={exercise} exercise={exercise} repRange={t3Range} setDraft={setDraft} />)}
             </div>
 
         </form>
