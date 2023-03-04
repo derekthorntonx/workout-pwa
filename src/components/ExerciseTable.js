@@ -1,24 +1,29 @@
 import { AddCircle, Clear } from '@mui/icons-material'
-import { useState } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import IndividualSet from './IndividualSet'
+import { CurrentWorkout } from '../context/CurrentWorkout'
 
 
-function ExerciseTable({ exercise, repRange, setDraft, type }) {
+function ExerciseTable({ exercise, repRange, setDraft, type, sets, setSets, setRender }) {
     
-    const [sets, setSets] = useState(3)
-    const setRows = []
-
-    for (let i = 1; i < sets + 1; i++){
-        setRows.push(<IndividualSet key={i} setNumber={i} repRange={repRange} exercise={exercise} setDraft={setDraft} type={type} />)
+    const draft = useContext(CurrentWorkout)
+    
+    const handleAddSet = (e) => {
+        e.preventDefault()
+        if (sets.length > 4) return
+        sets.push('0x0')
+        setSets(sets)
+        console.log(sets)
+        setRender(previous => !previous)
     }
 
-    const handleAddSet = () => {
-        if (sets >= 5) return
-        setSets(previous => previous + 1)
-    }
-
-    const handleDeleteSet = () => {
-        setSets(previous => previous - 1)
+    const handleDeleteSet = (e) => {
+        e.preventDefault()
+        if (sets.length < 4) return
+        sets.pop()
+        setSets(sets)
+        console.log(sets)
+        setRender(previous => !previous)
     }
 
     return (
@@ -31,9 +36,12 @@ function ExerciseTable({ exercise, repRange, setDraft, type }) {
                 <div>Reps</div>
             </div>
 
-            <div>{setRows}</div>
+            {sets.map((set, index) => <IndividualSet set={set} key={index} setNumber={index +1} exercise={exercise} repRange={repRange} setDraft={setDraft} type={type}/>)}
 
-            <div style={{display: 'flex', alignItem: 'center', justifyContent: 'center', marginTop: '1%'}}><AddCircle onClick={handleAddSet}/></div>
+            <div style={{display: 'flex', alignItem: 'center', justifyContent: 'center', marginTop: '1%'}}>
+                <button disabled={sets.length <= 3} onClick={handleDeleteSet}>-Set</button><button disabled={sets.length >= 5} onClick={handleAddSet}>+Set</button>
+                </div>
+            
 
         </div>
     )

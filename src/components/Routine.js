@@ -38,19 +38,19 @@ function Routine ({ routine, setRefreshKey, setEditFormVisible, setEditTarget, s
         let t2s = []
         routine.data.t2s.forEach(move => t2s.push({
                                                     name: move,
-                                                    sets: []
+                                                    sets: ['0x0', '0x0', '0x0']
                                                     }))
 
         let t3s = []
         routine.data.t3s.forEach(move => t3s.push({
                                                     name: move,
-                                                    sets: []
+                                                    sets: ['0x0', '0x0', '0x0']
                                                     }))
-        
+    
         let draft = {
             workoutName: routine.data.name,
             date: Date.now(),
-            main: [],
+            main: {sets:['0x0', '0x0', '0x0']},
             t2s,
             t3s
         }

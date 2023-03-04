@@ -8,11 +8,14 @@ function CurrentRoutine({ currentRoutine, setDraft }) {
     const draft = useContext(CurrentWorkout)
     const [assistanceExercises, setAssistanceExercises] = useState([])
     const [accessoryExercises, setAccessoryExercises] = useState([])
+    const [sets, setSets] = useState([])
+    const [render, setRender] = useState(0)
 
     useEffect(() => {
         setAssistanceExercises(draft.t2s)
         setAccessoryExercises(draft.t3s)
-    }, [])
+        console.log('currentrountine use effect proc')
+    }, [draft, render])
 
     switch (currentRoutine.data.cycle){
         case 1:
@@ -57,15 +60,15 @@ function CurrentRoutine({ currentRoutine, setDraft }) {
             <div className='current-routine-label'>{currentRoutine.data.name}</div>
 
             <div style={{width: '100%'}}>
-                <ExerciseTable exercise={currentRoutine.data.t1} repRange={t1Range} setDraft={setDraft} type={'main'}/>
+                <ExerciseTable exercise={currentRoutine.data.t1} repRange={t1Range} setDraft={setDraft} type={'main'} sets={draft.main.sets} setSets={setSets} setRender={setRender} />
             </div>
 
             <div style={{width: '100%'}}>
-                {assistanceExercises.map(exercise => <ExerciseTable key={exercise.name} exercise={exercise.name} repRange={t2Range} setDraft={setDraft} type={'t2s'} />)}
+                {assistanceExercises.map(exercise => <ExerciseTable key={exercise.name} exercise={exercise.name} repRange={t2Range} setDraft={setDraft} type={'t2s'} sets={exercise.sets} setSets={setSets} setRender={setRender} />)}
             </div>
 
             <div style={{width: '100%'}}>
-                {accessoryExercises.map(exercise => <ExerciseTable key={exercise.name} exercise={exercise.name} repRange={t3Range} setDraft={setDraft} type={'t3s'} />)}
+                {accessoryExercises.map(exercise => <ExerciseTable key={exercise.name} exercise={exercise.name} repRange={t3Range} setDraft={setDraft} type={'t3s'} sets={exercise.sets} setSets={setSets} setRender={setRender} />)}
             </div>
 
         </form>
