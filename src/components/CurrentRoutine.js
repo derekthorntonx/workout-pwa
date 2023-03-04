@@ -1,15 +1,19 @@
 import { History, CheckCircle } from '@mui/icons-material'
 import ExerciseTable from './ExerciseTable'
-import { useState } from 'react'
+import { useState, useContext, useEffect } from 'react'
+import { CurrentWorkout } from '../context/CurrentWorkout'
 
 function CurrentRoutine({ currentRoutine, setDraft }) {
     let t1Range, t2Range, t3Range
-    const assistanceExercises = [...currentRoutine.data.t2s]
-    const accessoryExercises = [...currentRoutine.data.t3s]
+    const draft = useContext(CurrentWorkout)
+    const [assistanceExercises, setAssistanceExercises] = useState([])
+    const [accessoryExercises, setAccessoryExercises] = useState([])
 
-    //TODO: Get previous workout of same name, use previous lift numbers to set placeholder values
+    useEffect(() => {
+        setAssistanceExercises(draft.t2s)
+        setAccessoryExercises(draft.t3s)
+    }, [])
 
-    // Change rep ranges depending on week cycle number
     switch (currentRoutine.data.cycle){
         case 1:
             t1Range = 10
@@ -35,10 +39,12 @@ function CurrentRoutine({ currentRoutine, setDraft }) {
 
     const handleHistory = () => {
         console.log('clicked history button')
+        console.log(draft)
     }
 
     const handleSubmit = () => {
         console.log('clicked submit button')
+        console.log(currentRoutine)
     }
 
     return (
@@ -51,15 +57,15 @@ function CurrentRoutine({ currentRoutine, setDraft }) {
             <div className='current-routine-label'>{currentRoutine.data.name}</div>
 
             <div style={{width: '100%'}}>
-                <ExerciseTable exercise={currentRoutine.data.t1} repRange={t1Range} setDraft={setDraft}/>
+                <ExerciseTable exercise={currentRoutine.data.t1} repRange={t1Range} setDraft={setDraft} type={'main'}/>
             </div>
 
             <div style={{width: '100%'}}>
-                {assistanceExercises.map(exercise => <ExerciseTable key={exercise} exercise={exercise} repRange={t2Range} setDraft={setDraft} />)}
+                {assistanceExercises.map(exercise => <ExerciseTable key={exercise.name} exercise={exercise.name} repRange={t2Range} setDraft={setDraft} type={'t2s'} />)}
             </div>
 
             <div style={{width: '100%'}}>
-                {accessoryExercises.map(exercise => <ExerciseTable key={exercise} exercise={exercise} repRange={t3Range} setDraft={setDraft} />)}
+                {accessoryExercises.map(exercise => <ExerciseTable key={exercise.name} exercise={exercise.name} repRange={t3Range} setDraft={setDraft} type={'t3s'} />)}
             </div>
 
         </form>

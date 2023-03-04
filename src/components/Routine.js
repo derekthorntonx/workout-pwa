@@ -34,28 +34,28 @@ function Routine ({ routine, setRefreshKey, setEditFormVisible, setEditTarget, s
     const handleStart = () => {
         setCurrentRoutine(routine)
         navigate('/')
-        //db.collection('draft').delete()
+
         let t2s = []
+        routine.data.t2s.forEach(move => t2s.push({
+                                                    name: move,
+                                                    sets: []
+                                                    }))
+
         let t3s = []
-        routine.data.t2s.forEach(exercise => t2s.push({[`${exercise}`]: []}))
-        routine.data.t3s.forEach(exercise => t3s.push({[`${exercise}`]: []}))
-        setDraft({
-                type: routine.data.name,
-                date: Date.now(),
-                main: [],
-                t2s,
-                t3s,
-                id: 1
-            })
-            
-        //db.collection('draft').add({
-        //    type: routine.data.name,
-        //    date: Date.now(),
-        //    main: [],
-        //    t2s,
-        //    t3s,
-        //    id: 1
-        //})
+        routine.data.t3s.forEach(move => t3s.push({
+                                                    name: move,
+                                                    sets: []
+                                                    }))
+        
+        let draft = {
+            workoutName: routine.data.name,
+            date: Date.now(),
+            main: [],
+            t2s,
+            t3s
+        }
+
+        setDraft(draft)
     }
 
     return (

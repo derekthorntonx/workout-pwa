@@ -3,7 +3,7 @@ import { useState, useRef, useContext } from 'react'
 import Localbase from 'localbase'
 import { CurrentWorkout } from '../context/CurrentWorkout'
 
-function IndividualSet({ setNumber, repRange, exercise, setDraft }) {
+function IndividualSet({ setNumber, repRange, exercise, setDraft, type }) {
     const [finished, setFinished] = useState(false)
     const weightRef = useRef()
     const repRef = useRef()
@@ -13,21 +13,46 @@ function IndividualSet({ setNumber, repRange, exercise, setDraft }) {
 
     const handleSaveDraft = () => {
         if (repRef.current.value === '' || weightRef.current.value === '') return
+
         if (!finished){
             let setString = weightRef.current.value + 'lbs x ' + repRef.current.value
-            console.log(draft.t2s)
+        
+            if (type === 'main'){
+                draft.main[setNumber -1] = setString
+                setDraft(draft)
 
-            //loop through array for matching exercise name, then push new set into array?
+            } else if (type === 't2s') {
+                draft.t2s.forEach(move => {if(exercise === Object.keys(move)[0]){
+                    Object.values(move)[0][setNumber -1] = setString
+                    setDraft(draft)
+                }})
+
+            } else if (type === 't3s') {
+                draft.t3s.forEach(move => {if(exercise === Object.keys(move)[0]){
+                    Object.values(move)[0].push(setString)
+                    setDraft(draft)
+                }})
+            }
         }
-        //FIX ME ^^^^^^^
-        //FIX ME ^^^^^^^
-        //FIX ME ^^^^^^^
-        //FIX ME ^^^^^^^
+
+
+        if (finished){
+           if (type === 'main'){
+                draft.main[setNumber -1] = null
+           } else if (type === 't2s') {
+                draft.t2s.forEach(move => {if(exercise === Object.keys(move)[0]){
+                Object.values(move)[0][setNumber -1] = null
+                setDraft(draft)
+                }})
+           } else if (type === 't3s') {
+                draft.t3s.forEach(move => {if(exercise === Object.keys(move)[0]){
+                Object.values(move)[0][setNumber -1] = null
+                setDraft(draft)
+                }})
+           }
+        }
 
         setFinished(!finished)
-        console.log('weight: ', weightRef.current.value, "reps: ", repRef.current.value, exercise, setNumber)
-
-        
     }
 
     return(

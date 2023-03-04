@@ -27,7 +27,8 @@ function EditForm ({ editTarget, setRefreshKey, setEditFormVisible }) {
             name: nameRef.current.value,
             t1: t1Ref.current.value,
             t2s: [...t2Inputs],
-            t3s: [...t3Inputs]
+            t3s: [...t3Inputs],
+            cycle: editTarget.data.cycle
         }).then( () => {
             setRefreshKey(oldKey => !oldKey)
             setEditFormVisible(false)})

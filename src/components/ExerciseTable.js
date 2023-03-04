@@ -3,13 +3,13 @@ import { useState } from 'react'
 import IndividualSet from './IndividualSet'
 
 
-function ExerciseTable({ exercise, repRange, setDraft }) {
+function ExerciseTable({ exercise, repRange, setDraft, type }) {
     
     const [sets, setSets] = useState(3)
     const setRows = []
 
     for (let i = 1; i < sets + 1; i++){
-        setRows.push(<IndividualSet key={i} setNumber={i} repRange={repRange} exercise={exercise} setDraft={setDraft} />)
+        setRows.push(<IndividualSet key={i} setNumber={i} repRange={repRange} exercise={exercise} setDraft={setDraft} type={type} />)
     }
 
     const handleAddSet = () => {
