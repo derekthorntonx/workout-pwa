@@ -1,5 +1,4 @@
-import { AddCircle, Clear } from '@mui/icons-material'
-import { useState, useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import IndividualSet from './IndividualSet'
 import { CurrentWorkout } from '../context/CurrentWorkout'
 
@@ -42,7 +41,6 @@ function ExerciseTable({ exercise, repRange, setDraft, type, sets, setSets, setR
                 <button disabled={sets.length <= 3} onClick={handleDeleteSet}>-Set</button><button disabled={sets.length >= 5} onClick={handleAddSet}>+Set</button>
                 </div>
             
-
         </div>
     )
 }

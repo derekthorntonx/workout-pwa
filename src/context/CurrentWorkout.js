@@ -1,3 +1,3 @@
 import { createContext } from 'react'
 
-export const CurrentWorkout = createContext(null)
+export const CurrentWorkout = createContext({})

@@ -34,6 +34,8 @@ function Routine ({ routine, setRefreshKey, setEditFormVisible, setEditTarget, s
     const handleStart = () => {
         setCurrentRoutine(routine)
         navigate('/')
+        let date = new Date()
+        
 
         let t2s = []
         routine.data.t2s.forEach(move => t2s.push({
@@ -46,11 +48,12 @@ function Routine ({ routine, setRefreshKey, setEditFormVisible, setEditTarget, s
                                                     name: move,
                                                     sets: ['0x0', '0x0', '0x0']
                                                     }))
+
     
         let draft = {
             workoutName: routine.data.name,
-            date: Date.now(),
-            main: {sets:['0x0', '0x0', '0x0']},
+            date: date.toISOString().split('T')[0],
+            main: {name: routine.data.t1, sets:['0x0', '0x0', '0x0']},
             t2s,
             t3s
         }

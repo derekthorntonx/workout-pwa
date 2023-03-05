@@ -1,10 +1,11 @@
 body {
   margin: 0;
+  height: 100vh;
 }
 
 /*--Global styling--*/
 .navbar {
-  position: fixed;
+  position: sticky;
   bottom: 0;
   width: 100vw;
 }
@@ -15,11 +16,6 @@ body {
 .routine-wrapper {
   height: 100vh;
   position: relative;
-}
-
-.create-routine-button {
-  position: fixed;
-  right: 0%;
 }
 
 .create-routine-form {
@@ -99,6 +95,15 @@ input::-webkit-inner-spin-button {
 
 .faded {
   color: gray;
+}
+
+.individual-workout-history {
+  padding: 5%;
+  margin: 2.5%;
+}
+
+.home-wrapper {
+  height: 200%;
 }
 
 /*--Home page--*/

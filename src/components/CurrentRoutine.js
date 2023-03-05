@@ -1,15 +1,17 @@
-import { History, CheckCircle } from '@mui/icons-material'
+import { History, CheckCircle, DeleteForever } from '@mui/icons-material'
 import ExerciseTable from './ExerciseTable'
 import { useState, useContext, useEffect } from 'react'
 import { CurrentWorkout } from '../context/CurrentWorkout'
+import Localbase from 'localbase'
 
-function CurrentRoutine({ currentRoutine, setDraft }) {
+function CurrentRoutine({ currentRoutine, setDraft, setCurrentRoutine, setRefreshKey }) {
     let t1Range, t2Range, t3Range
     const draft = useContext(CurrentWorkout)
     const [assistanceExercises, setAssistanceExercises] = useState([])
     const [accessoryExercises, setAccessoryExercises] = useState([])
     const [sets, setSets] = useState([])
     const [render, setRender] = useState(0)
+    let db = new Localbase('db')
 
     useEffect(() => {
         setAssistanceExercises(draft.t2s)
@@ -40,6 +42,16 @@ function CurrentRoutine({ currentRoutine, setDraft }) {
             break
     }
 
+    const handleTrash = () => {
+        let confirmation = window.confirm('Discard current workout?')
+        if(confirmation){
+            setDraft({})
+            setCurrentRoutine({})
+        }
+
+        return
+    }
+
     const handleHistory = () => {
         console.log('clicked history button')
         console.log(draft)
@@ -47,13 +59,16 @@ function CurrentRoutine({ currentRoutine, setDraft }) {
 
     const handleSubmit = () => {
         console.log('clicked submit button')
-        console.log(currentRoutine)
+        db.collection('history').add(draft)
+        setRefreshKey(previous => !previous)
+        setCurrentRoutine({})
     }
 
     return (
         <form className="current-routine-form">
             <div style={{display: 'flex', justifyContent: 'space-between', width: '100%', paddingBottom: '2.5%'}}>
                 <History fontSize='large' sx={{padding: '5%'}} onClick={handleHistory} />
+                <DeleteForever fontSize='large' sx={{padding: '5%'}} onClick={handleTrash} />
                 <CheckCircle fontSize='large' sx={{padding: '5%'}} onClick={handleSubmit} />
             </div>
 
