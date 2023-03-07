@@ -1,14 +1,26 @@
 import Localbase from "localbase"
 import { Menu, MenuItem, Button, Paper } from '@mui/material'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { Settings, PlayArrow } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
+import { History } from "../context/History"
 
-function Routine ({ routine, setRefreshKey, setEditFormVisible, setEditTarget, setCurrentRoutine, setDraft }) {
+function Routine ({ routine, setRefreshKey, setEditFormVisible, setEditTarget, setCurrentRoutine, setDraft, setPreviousSession }) {
     const [anchorEl, setAnchorEl] = useState(null);
+    const history = useContext(History)
     const open = Boolean(anchorEl)
     let db = new Localbase('db')
     const navigate = useNavigate();
+
+    const findSessionHistory = () => {
+        let historyArray = []
+        history.forEach(workout => {
+            if (workout.cycle === routine.data.cycle && workout.workoutName === routine.data.name){
+                historyArray.push(workout)
+            }
+        })
+        return historyArray.slice(-1)
+    }
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget)
@@ -32,10 +44,13 @@ function Routine ({ routine, setRefreshKey, setEditFormVisible, setEditTarget, s
     }
 
     const handleStart = () => {
+        setPreviousSession(findSessionHistory())
+        
         setCurrentRoutine(routine)
         navigate('/')
         let date = new Date()
-        
+ 
+        //setLastWorkout(previousSession)
 
         let t2s = []
         routine.data.t2s.forEach(move => t2s.push({
@@ -55,7 +70,8 @@ function Routine ({ routine, setRefreshKey, setEditFormVisible, setEditTarget, s
             date: date.toISOString().split('T')[0],
             main: {name: routine.data.t1, sets:['0x0', '0x0', '0x0']},
             t2s,
-            t3s
+            t3s,
+            cycle: routine.data.cycle
         }
 
         setDraft(draft)

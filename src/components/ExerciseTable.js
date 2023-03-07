@@ -26,7 +26,7 @@ function ExerciseTable({ exercise, repRange, setDraft, type, sets, setSets, setR
     }
 
     return (
-        <div>
+        <div className='exercise-table'>
             <div className="exercise-name">{exercise}</div>
             <div className="exercise-grid">
                 <div>Set</div>
@@ -37,8 +37,8 @@ function ExerciseTable({ exercise, repRange, setDraft, type, sets, setSets, setR
 
             {sets.map((set, index) => <IndividualSet set={set} key={index} setNumber={index +1} exercise={exercise} repRange={repRange} setDraft={setDraft} type={type}/>)}
 
-            <div style={{display: 'flex', alignItem: 'center', justifyContent: 'center', marginTop: '1%'}}>
-                <button disabled={sets.length <= 3} onClick={handleDeleteSet}>-Set</button><button disabled={sets.length >= 5} onClick={handleAddSet}>+Set</button>
+            <div style={{display: 'flex', alignItem: 'center', justifyContent: 'center', marginTop: '1%', gap: '2.5%'}}>
+                <button disabled={sets.length <= 3} onClick={handleDeleteSet}>-</button><button disabled={sets.length >= 5} onClick={handleAddSet}>+</button>
                 </div>
             
         </div>

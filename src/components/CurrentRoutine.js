@@ -4,7 +4,7 @@ import { useState, useContext, useEffect } from 'react'
 import { CurrentWorkout } from '../context/CurrentWorkout'
 import Localbase from 'localbase'
 
-function CurrentRoutine({ currentRoutine, setDraft, setCurrentRoutine, setRefreshKey }) {
+function CurrentRoutine({ currentRoutine, setDraft, setCurrentRoutine, setRefreshKey, previousSession, setPreviousSession }) {
     let t1Range, t2Range, t3Range
     const draft = useContext(CurrentWorkout)
     const [assistanceExercises, setAssistanceExercises] = useState([])
@@ -16,7 +16,6 @@ function CurrentRoutine({ currentRoutine, setDraft, setCurrentRoutine, setRefres
     useEffect(() => {
         setAssistanceExercises(draft.t2s)
         setAccessoryExercises(draft.t3s)
-        console.log('currentrountine use effect proc')
     }, [draft, render])
 
     switch (currentRoutine.data.cycle){
@@ -48,7 +47,6 @@ function CurrentRoutine({ currentRoutine, setDraft, setCurrentRoutine, setRefres
             setDraft({})
             setCurrentRoutine({})
         }
-
         return
     }
 
@@ -57,11 +55,21 @@ function CurrentRoutine({ currentRoutine, setDraft, setCurrentRoutine, setRefres
         console.log(draft)
     }
 
-    const handleSubmit = () => {
-        console.log('clicked submit button')
-        db.collection('history').add(draft)
+    const handleSubmit = async () => {
+        let confirmation = window.confirm('Finish and save current workout?')
+        if (confirmation){
+            let updatedCycle = currentRoutine.data.cycle + 1
+            if (updatedCycle >= 4){
+                updatedCycle = 1
+            }
+            db.collection('history').add(draft)
+            await db.collection('routines').doc({name: currentRoutine.data.name}).update({
+                cycle: updatedCycle
+            })
+        }
         setRefreshKey(previous => !previous)
         setCurrentRoutine({})
+        setPreviousSession({})
     }
 
     return (
@@ -73,16 +81,17 @@ function CurrentRoutine({ currentRoutine, setDraft, setCurrentRoutine, setRefres
             </div>
 
             <div className='current-routine-label'>{currentRoutine.data.name}</div>
+            <div>Week {currentRoutine.data.cycle}</div>
 
-            <div style={{width: '100%'}}>
+            <div style={{width: '90%'}}>
                 <ExerciseTable exercise={currentRoutine.data.t1} repRange={t1Range} setDraft={setDraft} type={'main'} sets={draft.main.sets} setSets={setSets} setRender={setRender} />
             </div>
 
-            <div style={{width: '100%'}}>
+            <div style={{width: '90%'}}>
                 {assistanceExercises.map(exercise => <ExerciseTable key={exercise.name} exercise={exercise.name} repRange={t2Range} setDraft={setDraft} type={'t2s'} sets={exercise.sets} setSets={setSets} setRender={setRender} />)}
             </div>
 
-            <div style={{width: '100%'}}>
+            <div style={{width: '90%'}}>
                 {accessoryExercises.map(exercise => <ExerciseTable key={exercise.name} exercise={exercise.name} repRange={t3Range} setDraft={setDraft} type={'t3s'} sets={exercise.sets} setSets={setSets} setRender={setRender} />)}
             </div>
 
