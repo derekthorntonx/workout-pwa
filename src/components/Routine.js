@@ -43,7 +43,7 @@ function Routine ({ routine, setRefreshKey, setEditFormVisible, setEditTarget, s
         setAnchorEl(null)
     }
 
-    const handleStart = () => {
+    const handleStart =  () => {
         setPreviousSession(findSessionHistory())
         
         setCurrentRoutine(routine)

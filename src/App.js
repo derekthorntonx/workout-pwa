@@ -16,7 +16,7 @@ function App() {
   const [draft, setDraft] = useState([])
   const [history, setHistory] = useState([])
   const [trackers, setTrackers] = useState([])
-  const [previousSession, setPreviousSession] = useState({})
+  const [previousSession, setPreviousSession] = useState([])
 
 
   let db = new Localbase('db')
@@ -63,7 +63,7 @@ function App() {
     <div className="App">
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Home setCurrentRoutine={setCurrentRoutine} currentRoutine={currentRoutine} setDraft={setDraft} history={history} setRefreshKey={setRefreshKey}/>} setPreviousSession={setPreviousSession} previousSession={previousSession}/>
+        <Route path='/' element={<Home setCurrentRoutine={setCurrentRoutine} currentRoutine={currentRoutine} setDraft={setDraft} history={history} setRefreshKey={setRefreshKey} setPreviousSession={setPreviousSession} previousSession={previousSession}/>} />
         <Route path='/tracking' element={<Tracking setRefreshKey={setRefreshKey} trackers={trackers}/>} />
         <Route path='/routines' element={<Routines routineList={routineList} setRefreshKey={setRefreshKey} setCurrentRoutine={setCurrentRoutine} setDraft={setDraft} setPreviousSession={setPreviousSession} />} />
       </Routes>

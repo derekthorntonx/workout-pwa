@@ -58,13 +58,17 @@ body {
   background-color: lightblue;
 }
 
+.disabled {
+  color: rgba(128, 128, 128, 0.534);
+}
+
 .current-routine-label {
   font-size: 2rem;
 }
 
 .exercise-grid {
   display: grid;
-  grid-template-columns: 1fr 3fr 2fr 2fr 1fr;
+  grid-template-columns: 1fr 3fr 2fr 2fr;
   padding: 1% 5%;
   place-items: center;
   position: relative;

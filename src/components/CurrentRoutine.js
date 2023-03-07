@@ -1,4 +1,4 @@
-import { History, CheckCircle, DeleteForever } from '@mui/icons-material'
+import { History, CheckCircle, DeleteForever, KeyboardReturn } from '@mui/icons-material'
 import ExerciseTable from './ExerciseTable'
 import { useState, useContext, useEffect } from 'react'
 import { CurrentWorkout } from '../context/CurrentWorkout'
@@ -11,11 +11,13 @@ function CurrentRoutine({ currentRoutine, setDraft, setCurrentRoutine, setRefres
     const [accessoryExercises, setAccessoryExercises] = useState([])
     const [sets, setSets] = useState([])
     const [render, setRender] = useState(0)
+    const [showHistory, setShowHistory] = useState(false)
     let db = new Localbase('db')
 
     useEffect(() => {
         setAssistanceExercises(draft.t2s)
         setAccessoryExercises(draft.t3s)
+        console.log(previousSession) 
     }, [draft, render])
 
     switch (currentRoutine.data.cycle){
@@ -47,12 +49,13 @@ function CurrentRoutine({ currentRoutine, setDraft, setCurrentRoutine, setRefres
             setDraft({})
             setCurrentRoutine({})
         }
-        return
     }
 
-    const handleHistory = () => {
-        console.log('clicked history button')
-        console.log(draft)
+    const handleShowHistory = () => {
+        if (previousSession.length === 0){
+            return
+        }
+        setShowHistory(true)
     }
 
     const handleSubmit = async () => {
@@ -74,8 +77,11 @@ function CurrentRoutine({ currentRoutine, setDraft, setCurrentRoutine, setRefres
 
     return (
         <form className="current-routine-form">
+            {!showHistory
+            ?
+            <>
             <div style={{display: 'flex', justifyContent: 'space-between', width: '100%', paddingBottom: '2.5%'}}>
-                <History fontSize='large' sx={{padding: '5%'}} onClick={handleHistory} />
+                <History fontSize='large' sx={{padding: '5%'}} className={previousSession.length === 0 ? 'disabled' : ''} onClick={handleShowHistory}/>
                 <DeleteForever fontSize='large' sx={{padding: '5%'}} onClick={handleTrash} />
                 <CheckCircle fontSize='large' sx={{padding: '5%'}} onClick={handleSubmit} />
             </div>
@@ -84,16 +90,42 @@ function CurrentRoutine({ currentRoutine, setDraft, setCurrentRoutine, setRefres
             <div>Week {currentRoutine.data.cycle}</div>
 
             <div style={{width: '90%'}}>
-                <ExerciseTable exercise={currentRoutine.data.t1} repRange={t1Range} setDraft={setDraft} type={'main'} sets={draft.main.sets} setSets={setSets} setRender={setRender} />
+                <ExerciseTable exercise={currentRoutine.data.t1} repRange={t1Range} setDraft={setDraft} type={'main'} sets={draft.main.sets} setSets={setSets} setRender={setRender}/>
             </div>
 
             <div style={{width: '90%'}}>
-                {assistanceExercises.map(exercise => <ExerciseTable key={exercise.name} exercise={exercise.name} repRange={t2Range} setDraft={setDraft} type={'t2s'} sets={exercise.sets} setSets={setSets} setRender={setRender} />)}
+                {assistanceExercises.map(exercise => <ExerciseTable key={exercise.name} exercise={exercise.name} repRange={t2Range} setDraft={setDraft} type={'t2s'} sets={exercise.sets} setSets={setSets} setRender={setRender}/>)}
             </div>
 
             <div style={{width: '90%'}}>
-                {accessoryExercises.map(exercise => <ExerciseTable key={exercise.name} exercise={exercise.name} repRange={t3Range} setDraft={setDraft} type={'t3s'} sets={exercise.sets} setSets={setSets} setRender={setRender} />)}
+                {accessoryExercises.map(exercise => <ExerciseTable key={exercise.name} exercise={exercise.name} repRange={t3Range} setDraft={setDraft} type={'t3s'} sets={exercise.sets} setSets={setSets} setRender={setRender}/>)}
             </div>
+            </>
+            :
+            <>
+            {previousSession.length === 0 ? <div>no history found</div> : 
+            <>
+            <div style={{display: 'flex', justifyContent: 'space-between', width: '100%', paddingBottom: '2.5%'}}>
+                <KeyboardReturn fontSize='large' sx={{padding: '5%'}} onClick={() => setShowHistory(false)}/>
+            </div>
+
+            <div className='current-routine-label'>Previous {currentRoutine.data.name}</div>
+            <div>Week {currentRoutine.data.cycle}</div>
+
+            <div style={{width: '90%'}}>
+                <ExerciseTable exercise={currentRoutine.data.t1} sets={previousSession[0].main.sets} history={true}/>
+            </div>
+
+            <div style={{width: '90%'}}>
+                {previousSession[0].t2s.map(exercise => <ExerciseTable key={exercise.name} exercise={exercise.name} sets={exercise.sets} history={true}/>)}
+            </div>
+
+            <div style={{width: '90%'}}>
+                {previousSession[0].t3s.map(exercise => <ExerciseTable key={exercise.name} exercise={exercise.name} sets={exercise.sets} history={true}/>)}
+            </div>
+            </>}
+            </>
+            }
 
         </form>
     )
