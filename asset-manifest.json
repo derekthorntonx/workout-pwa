@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/workout-pwa/static/css/main.13d1d11b.css",
-    "main.js": "/workout-pwa/static/js/main.a127d628.js",
+    "main.js": "/workout-pwa/static/js/main.66800c24.js",
     "service-worker.js": "/workout-pwa/service-worker.js",
     "index.html": "/workout-pwa/index.html",
     "main.13d1d11b.css.map": "/workout-pwa/static/css/main.13d1d11b.css.map",
-    "main.a127d628.js.map": "/workout-pwa/static/js/main.a127d628.js.map"
+    "main.66800c24.js.map": "/workout-pwa/static/js/main.66800c24.js.map"
   },
   "entrypoints": [
     "static/css/main.13d1d11b.css",
-    "static/js/main.a127d628.js"
+    "static/js/main.66800c24.js"
   ]
 }
