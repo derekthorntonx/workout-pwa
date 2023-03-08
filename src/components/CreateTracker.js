@@ -24,10 +24,10 @@ function CreateTracker({ setTrackerFormVisible, setRefreshKey }) {
         
     return(
         <form className="create-tracker-form">
-            <TextField placeholder='What to track...' variant="standard" required inputRef={nameRef}/>
+            <TextField placeholder='What to track...' variant="outlined" required inputRef={nameRef}/>
             <div>
-                <input type='number' required ref={weeklyGoalRef}/>
-                <Select value={measurement} onChange={(e) => setMeasurement(e.target.value)}>
+                <input style={{height: '2rem'}} type='number' required ref={weeklyGoalRef}/>
+                <Select sx={{height: '2.5rem'}} value={measurement} onChange={(e) => setMeasurement(e.target.value)}>
                     <MenuItem selected value='rep(s)'>Reps</MenuItem>
                     <MenuItem value='set(s)'>Sets</MenuItem>
                     <MenuItem value='min(s)'>Mins</MenuItem>

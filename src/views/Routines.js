@@ -30,7 +30,7 @@ function Routines ({ routineList, setRefreshKey, setCurrentRoutine, setDraft, se
             {routineList.map((routine, index) => 
                 <Routine key={index} routine={routine} setRefreshKey={setRefreshKey} setEditFormVisible={setEditFormVisible} setEditTarget={setEditTarget} setCurrentRoutine={setCurrentRoutine} setDraft={setDraft} setPreviousSession={setPreviousSession}/>
             )}
-            <Fab onClick={handleCreate} className='create-routine-button' sx={{background: 'peachpuff', position: 'fixed', right: '10%', bottom: '15%'}}> <Add/> </Fab>
+            <Fab onClick={handleCreate} className='create-routine-button' sx={{background: 'orange', position: 'fixed', right: '10%', bottom: '15%'}}> <Add/> </Fab>
             </>
             : null}
         </div>

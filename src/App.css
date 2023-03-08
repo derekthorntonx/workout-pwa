@@ -141,16 +141,17 @@ input::-webkit-inner-spin-button {
   display: grid;
   grid-template-columns: 1fr 1fr;
   padding: 2.5%;
-  gap: 2.5%;
+  
 }
 
 .tracker-card {
-  width: auto;
-  height: 25%;
+  width: 45vw;
+  height: 25vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2%;
+  margin-bottom: 2.5%;
 }
 
 .tracker-card input[type='number']{
@@ -159,4 +160,12 @@ input::-webkit-inner-spin-button {
   font-size: 1.1rem;
 }
 
+.create-tracker-form {
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5%;
+  margin-top: 10%;
+}
 /*--Tracking page--*/
